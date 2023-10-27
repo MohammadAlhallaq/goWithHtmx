@@ -8,8 +8,8 @@ import (
 	"net/http"
 )
 
-func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	template.Must(template.ParseFiles("./index.html")).Execute(w, nil)
+func index(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	template.Must(template.ParseFiles("./src/index.html")).Execute(w, nil)
 }
 
 func create(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -33,11 +33,15 @@ func main() {
 }
 
 func setupAndRun() {
+
 	router := httprouter.New()
+
+	fs := http.FileServer(http.Dir("src"))
+	http.Handle("/src/", http.StripPrefix("/src/", fs))
 
 	router.GET("/items", index)
 	router.PUT("/items/:id", update)
 	router.DELETE("/items/:id", delete)
 	router.POST("/items/create", create)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
