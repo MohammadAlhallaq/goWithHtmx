@@ -3,26 +3,41 @@ package main
 import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"goWithHtmx/model"
 	"html/template"
+	"log"
 	"net/http"
 )
 
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	template.Must(template.ParseFiles("./index.html")).Execute(w, nil)
 }
 
-func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func create(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
+}
+
+func getItems(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
+}
+
+func update(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
+}
+
+func delete(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
 }
 
 func main() {
+	setupAndRun()
+}
 
-	model.Setup()
-	//router := httprouter.New()
-	//
-	//router.GET("/", Index)
-	//router.GET("/hello/:name", Hello)
-	//
-	//log.Fatal(http.ListenAndServe(":8080", router))
+func setupAndRun() {
+	router := httprouter.New()
+
+	router.GET("/items", index)
+	router.PUT("/items/:id", update)
+	router.DELETE("/items/:id", delete)
+	router.POST("/items/create", create)
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
