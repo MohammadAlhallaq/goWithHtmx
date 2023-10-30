@@ -3,13 +3,25 @@ package main
 import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"html/template"
+	"goWithHtmx/model"
 	"log"
 	"net/http"
 )
 
+func sendItems(w http.ResponseWriter) {
+	users, _ := model.GetAllItems()
+	fmt.Println(users)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+	//err = template.Must(template.ParseFiles("src/public/index.html")).ExecuteTemplate(w, "items", items)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+}
+
 func index(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	template.Must(template.ParseFiles("src/public/index.html")).Execute(w, nil)
+	sendItems(w)
 }
 
 func create(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -29,6 +41,7 @@ func delete(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func main() {
+	model.Setup()
 	setupAndRun()
 }
 
