@@ -5,9 +5,9 @@ import (
 )
 
 var (
-	ErrItemNotFound    = errors.New("the customer was not found in the repository")
-	ErrFailedToAddItem = errors.New("failed to add the customer to the repository")
-	ErrUpdateCItem     = errors.New("failed to update the customer in the repository")
+	ErrItemNotFound    = errors.New("the item was not found in the repository")
+	ErrFailedToAddItem = errors.New("failed to add the item to the repository")
+	ErrUpdateItem      = errors.New("failed to update the item in the repository")
 )
 
 type ItemRepo interface {

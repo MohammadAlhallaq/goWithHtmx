@@ -27,7 +27,6 @@ func (m mysqlItem) ToItem() model.Item {
 }
 
 func New(connectionString string) (*MysqlRepo, error) {
-	//dsn := flag.String("dsn", os.Getenv("DSN"), "root:@tcp(127.0.0.1:3306)/hmshop")
 	dsn := flag.String("dsn", os.Getenv("DSN"), connectionString)
 	flag.Parse()
 
@@ -50,15 +49,14 @@ func New(connectionString string) (*MysqlRepo, error) {
 func (m MysqlRepo) GetAll() ([]model.Item, error) {
 	var items []model.Item
 
-	query, err := m.db.Query(`select * from items;`)
+	query, err := m.db.Query(`select * from usssers;`)
 	if err != nil {
-		return nil, err
+		return items, err
 	}
 
 	defer query.Close()
 
 	for query.Next() {
-
 		var i mysqlItem
 		err = query.Scan(&i.ID, &i.Title, &i.Available)
 		if err != nil {

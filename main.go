@@ -3,14 +3,22 @@ package main
 import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"goWithHtmx/model"
+	services "goWithHtmx/model/service"
 	"log"
 	"net/http"
 )
 
 func sendItems(w http.ResponseWriter) {
-	users, _ := model.GetAllItems()
-	fmt.Println(users)
+	is, _ := services.NewItemService(services.WithMysqlItem("root:@tcp(127.0.0.1:3306)/hmshop"))
+	fmt.Println(is.GetAllItems())
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+	//items, err := is.Item.GetAll()
+	//fmt.Println(items)
+
+	//users, _ := model.GetAllItems()
+	//fmt.Println(users)
 	//if err != nil {
 	//	fmt.Println(err.Error())
 	//}
@@ -41,7 +49,6 @@ func delete(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func main() {
-	model.Setup()
 	setupAndRun()
 }
 
