@@ -9,8 +9,8 @@ import (
 )
 
 func sendItems(w http.ResponseWriter) {
-	is, _ := services.NewItemService(services.WithMysqlItem("root:@tcp(127.0.0.1:3306)/hmshop"))
-	fmt.Println(is.GetAllItems())
+	is, _ := services.NewItemService(services.WithMysqlItem("root:@tcp(127.0.0.1:3306)/goWithHtmx"))
+	is.GetAllItems()
 	//if err != nil {
 	//	fmt.Println(err.Error())
 	//}
@@ -53,11 +53,8 @@ func main() {
 }
 
 func setupAndRun() {
-
 	router := httprouter.New()
-
 	router.ServeFiles("/src/*filepath", http.Dir("src"))
-
 	router.GET("/items", index)
 	router.PUT("/items/:id", update)
 	router.DELETE("/items/:id", delete)

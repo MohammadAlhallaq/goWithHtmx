@@ -13,7 +13,7 @@ var (
 type ItemRepo interface {
 	GetAll() ([]Item, error)
 	Get(id uint64) (Item, error)
-	Add(customer Item) error
+	Add(item Item) error
 	Delete(id uint64) error
 	UpdateStatus(id uint64) error
 }

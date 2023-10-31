@@ -2,10 +2,8 @@ package mysql
 
 import (
 	"database/sql"
-	"flag"
 	_ "github.com/go-sql-driver/mysql"
 	"goWithHtmx/model"
-	"os"
 )
 
 type MysqlRepo struct {
@@ -13,9 +11,9 @@ type MysqlRepo struct {
 }
 
 type mysqlItem struct {
-	ID        uint64 `json:"id"`
-	Title     string `json:"title"`
-	Available bool   `json:"available"`
+	ID        uint64
+	Title     string
+	Available bool
 }
 
 func (m mysqlItem) ToItem() model.Item {
@@ -27,19 +25,10 @@ func (m mysqlItem) ToItem() model.Item {
 }
 
 func New(connectionString string) (*MysqlRepo, error) {
-	dsn := flag.String("dsn", os.Getenv("DSN"), connectionString)
-	flag.Parse()
-
-	db, err := sql.Open("mysql", *dsn)
+	db, err := sql.Open("mysql", connectionString)
 	if err != nil {
 		panic(err.Error())
 	}
-	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-
-		}
-	}(db)
 
 	return &MysqlRepo{
 		db: db,
@@ -49,12 +38,12 @@ func New(connectionString string) (*MysqlRepo, error) {
 func (m MysqlRepo) GetAll() ([]model.Item, error) {
 	var items []model.Item
 
-	query, err := m.db.Query(`select * from usssers;`)
+	query, err := m.db.Query(`select * from items;`)
 	if err != nil {
 		return items, err
 	}
 
-	defer query.Close()
+	defer m.db.Close()
 
 	for query.Next() {
 		var i mysqlItem

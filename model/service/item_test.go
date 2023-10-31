@@ -5,7 +5,7 @@ import (
 )
 
 func TestNewItemService(t *testing.T) {
-	is, err := NewItemService(WithMysqlItem("root:@tcp(127.0.0.1:3306)/hmshop"))
+	is, err := NewItemService(WithMysqlItem("root:@tcp(127.0.0.1:3306)/goWithhtmx"))
 	if err != nil {
 		t.Errorf(err.Error())
 	}

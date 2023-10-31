@@ -38,5 +38,6 @@ func (is *ItemService) GetAllItems() ([]model.Item, error) {
 	if err != nil {
 		return all, err
 	}
+
 	return all, err
 }

@@ -6,27 +6,27 @@ type Item struct {
 	available bool
 }
 
-func (p Item) GetID() uint64 {
+func (p *Item) GetID() uint64 {
 	return p.id
 }
 
-func (p Item) GetTitle() string {
+func (p *Item) GetTitle() string {
 	return p.title
 }
 
-func (p Item) GetPrice() bool {
+func (p *Item) GetPrice() bool {
 	return p.available
 }
 
-func (p Item) SetID(id uint64) {
+func (p *Item) SetID(id uint64) {
 	p.id = id
 }
 
-func (p Item) SetTile(title string) {
+func (p *Item) SetTile(title string) {
 	p.title = title
 }
 
-func (p Item) SetAvailable(available bool) {
+func (p *Item) SetAvailable(available bool) {
 	p.available = available
 }
 
